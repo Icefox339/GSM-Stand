@@ -5,7 +5,7 @@ import socket
 import tkinter as tk
 from tkinter import messagebox, ttk
 
-from gsm_algorithms import a3_a8_comp128_like, a5_encrypt
+from gsm_algorithms import a3_a8, a5_encrypt
 
 
 class GSMClientGUI:
@@ -88,7 +88,7 @@ class GSMClientGUI:
                     return
 
                 rand = bytes.fromhex(chall["rand"])
-                sres, kc = a3_a8_comp128_like(ki, rand)
+                sres, kc = a3_a8(ki, rand)
                 self.append(f"[MS] Computed SRES={sres.hex()} Kc={kc.hex()}")
 
                 self._send(sock, {"type": "auth_response", "sres": sres.hex()})

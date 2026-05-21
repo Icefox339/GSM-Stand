@@ -6,7 +6,7 @@ import socket
 import threading
 from typing import Dict
 
-from gsm_algorithms import a3_a8_comp128_like, a5_decrypt
+from gsm_algorithms import a3_a8, a5_decrypt
 
 
 class GSMAuthServer:
@@ -68,7 +68,7 @@ class GSMAuthServer:
 
             ki = bytes.fromhex(self.subscribers[imsi])
             rand = secrets.token_bytes(16)
-            sres_expected, kc = a3_a8_comp128_like(ki, rand)
+            sres_expected, kc = a3_a8(ki, rand)
 
             self._send(conn, {"type": "auth_challenge", "rand": rand.hex()})
             resp = self._recv(conn)
